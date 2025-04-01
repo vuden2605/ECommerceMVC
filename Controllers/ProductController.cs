@@ -21,11 +21,15 @@ namespace EcommerceMVC.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index() {
-            var products=await _context.Products.ToListAsync();
+        public async Task<IActionResult> Index(int? CategoryId, int? ProductId) {
+            var products = CategoryId == null 
+                ? await _context.Products.ToListAsync() 
+                : await _context.Products.Where(p => p.CategoryId == CategoryId).ToListAsync();
+            products= ProductId == null 
+                ? products 
+                : products.Where(p => p.ProductId == ProductId).ToList();
             return View(products);
         }
-
         // GET: Product/Details/5
         public async Task<IActionResult> Details (int? id) {
             if (id == null) {
