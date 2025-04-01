@@ -1,0 +1,9 @@
+@model IEnumerable<EcommerceMVC.Models.Category>
+<div class="list-group">
+    @foreach (var category in Model)
+    {
+        <li class="list-group-item fw-semibold">
+            @category.Name
+        </li>
+    }
+</div>
