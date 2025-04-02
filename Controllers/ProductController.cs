@@ -22,16 +22,19 @@ namespace EcommerceMVC.Controllers
 
         // GET: Product
         public async Task<IActionResult> Index(int? CategoryId, string? Name, int? Page) {
-            var totalItems = await _context.Products.CountAsync();
+            int pageNumber = Page ?? 1; 
+            int pageSize=12;
             var products = await _context.Products
-                                    .Skip((page - 1) * pageSize)
+                                    .Skip((pageNumber - 1) * pageSize)
                                     .Take(pageSize)
                                     .ToListAsync();
-            var products = CategoryId == null 
+            products = CategoryId == null 
                 ? await _context.Products.ToListAsync() 
                 : await _context.Products.Where(p => p.CategoryId == CategoryId).ToListAsync();
 
             products = Name == null ? products:products.Where(p =>p.Name !=null && p.Name.Contains(Name)).ToList();
+            int totalItems = products.Count();
+            products=products.Skip((pageNumber-1)*pageSize).Take(pageSize).ToList();
             return View(products);
         }
         // GET: Product/Details/5
