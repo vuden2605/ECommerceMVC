@@ -21,14 +21,21 @@ namespace EcommerceMVC.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index(int? CategoryId, string Name) {
-            Console.WriteLine("CategoryId: " + CategoryId);
-            Console.WriteLine("Product: " + Name);
-            var products = CategoryId == null 
-                ? await _context.Products.ToListAsync() 
-                : await _context.Products.Where(p => p.CategoryId == CategoryId).ToListAsync();
-
-            products = Name == null ? products:products.Where(p =>p.Name !=null && p.Name.Contains(Name)).ToList();
+        public async Task<IActionResult> Index(int? CategoryId, string? Name, int? Page) {
+            int pageSize = 12;
+            int pageNumber = Page ?? 1; 
+            var query= _context.Products.AsQueryable();
+            if (CategoryId.HasValue) {
+                query=query.Where(p => p.CategoryId==CategoryId);
+            }
+            if(!string.IsNullOrEmpty(Name)){
+                query=query.Where(p => p.Name != null && p.Name.Contains(Name));
+            }
+            int totalItems= await query.CountAsync();
+            var products= await query.Skip((pageNumber-1)*pageSize).Take(pageSize).ToListAsync();
+            ViewBag.totalItems=totalItems;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
             return View(products);
         }
         // GET: Product/Details/5
