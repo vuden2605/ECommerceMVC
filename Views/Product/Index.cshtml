@@ -24,16 +24,17 @@
             </div>
             
             <!-- Thanh tìm kiếm -->
-            <div class="list-group list-group-flush mt-3"></div>
+            <div class="list-group list-group-flush mt-3">
                 <h6 class="list-group-item text-center">Price Range</h6>
-                    <form asp-action="Index" method="get">
-                        <input type="range" class="form-range" min="0" max="500" step="10" name="minPrice" />
-                        <div class="d-flex justify-content-between">
-                            <span>0</span>
-                            <span>2000</span>
-                        </div>
-                        <button type="submit" class="btn btn-outline-primary btn-sm w-100 mt-2">Apply</button>
-                    </form>
+                <form asp-action="Index" method="get">
+                    <input type="range" class="form-range" min="0" max="500" step="10" name="minPrice" />
+                    <div class="d-flex justify-content-between">
+                        <span>0</span>
+                        <span>500</span> <!-- Cập nhật giá trị max cho đúng -->
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary btn-sm w-100 mt-2">Apply</button>
+                </form>
+            </div>
         </div>
 
         <div class="col-md-9">
