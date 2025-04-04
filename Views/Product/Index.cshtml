@@ -50,16 +50,20 @@
                                 <p class="card-text fw-bold text-success">@item.Price.ToString("C")</p>
                             </div>
                             <div class="card-footer bg-transparent border-0 text-center">
-                                <form asp-action="AddToCart" method="post">
-                                    <input type="hidden" name="productId" value="@item.ProductId" />
-                                    <button type="submit" class="btn btn-outline-primary w-100">Add to Cart</button>
-                                </form>
+                                <div class="d-flex gap-2">
+                                    <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-outline-secondary w-50">Xem Chi Tiết</a>
+                                    <form asp-action="AddToCart" method="post" class="w-50">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="btn btn-outline-primary w-100">Add to Cart</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
+
 </div>
 @{
     var pageNumber = ViewBag.PageNumber ?? 1;
